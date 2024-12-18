@@ -9,7 +9,7 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/gin-admin/gin-admin-cli/v10/internal/utils"
+	"github.com/PowerClover/gin-admin-cli/v1/internal/utils"
 	"go.uber.org/zap"
 )
 

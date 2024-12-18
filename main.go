@@ -4,8 +4,8 @@ import (
 	"embed"
 	"os"
 
-	"github.com/gin-admin/gin-admin-cli/v10/cmd"
-	"github.com/gin-admin/gin-admin-cli/v10/internal/tfs"
+	"github.com/PowerClover/gin-admin-cli/v1/cmd"
+	"github.com/PowerClover/gin-admin-cli/v1/internal/tfs"
 	"github.com/urfave/cli/v2"
 	"go.uber.org/zap"
 )

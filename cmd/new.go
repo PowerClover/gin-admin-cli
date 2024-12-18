@@ -3,7 +3,7 @@ package cmd
 import (
 	"context"
 
-	"github.com/gin-admin/gin-admin-cli/v10/internal/actions"
+	"github.com/PowerClover/gin-admin-cli/v1/internal/actions"
 	"github.com/urfave/cli/v2"
 )
 

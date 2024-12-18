@@ -1,4 +1,4 @@
-module github.com/gin-admin/gin-admin-cli/v10
+module github.com/PowerClover/gin-admin-cli/v1
 
 go 1.20
 
