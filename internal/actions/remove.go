@@ -6,9 +6,9 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/PowerClover/gin-admin-cli/v1/internal/parser"
-	"github.com/PowerClover/gin-admin-cli/v1/internal/schema"
-	"github.com/PowerClover/gin-admin-cli/v1/internal/utils"
+	"github.com/PowerClover/gin-admin-cli/v10/internal/parser"
+	"github.com/PowerClover/gin-admin-cli/v10/internal/schema"
+	"github.com/PowerClover/gin-admin-cli/v10/internal/utils"
 	"go.uber.org/zap"
 )
 

@@ -4,9 +4,9 @@ import (
 	"errors"
 	"strings"
 
-	"github.com/PowerClover/gin-admin-cli/v1/internal/actions"
-	"github.com/PowerClover/gin-admin-cli/v1/internal/schema"
-	"github.com/PowerClover/gin-admin-cli/v1/internal/tfs"
+	"github.com/PowerClover/gin-admin-cli/v10/internal/actions"
+	"github.com/PowerClover/gin-admin-cli/v10/internal/schema"
+	"github.com/PowerClover/gin-admin-cli/v10/internal/tfs"
 	"github.com/urfave/cli/v2"
 )
 

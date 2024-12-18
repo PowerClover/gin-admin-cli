@@ -13,7 +13,7 @@
 ### Get and install
 
 ```bash
-go install github.com/PowerClover/gin-admin-cli/v1@latest
+go install github.com/PowerClover/gin-admin-cli/v10@latest
 ```
 
 ### Create a new project

@@ -4,7 +4,7 @@ import (
 	"bytes"
 	"text/template"
 
-	"github.com/PowerClover/gin-admin-cli/v1/internal/utils"
+	"github.com/PowerClover/gin-admin-cli/v10/internal/utils"
 )
 
 const (
