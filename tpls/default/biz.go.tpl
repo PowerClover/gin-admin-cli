@@ -27,17 +27,10 @@ type {{$name}} struct {
 func (a *{{$name}}) Query(ctx context.Context, params schema.{{$name}}QueryParam) (*schema.{{$name}}QueryResult, error) {
 	params.Pagination = {{if .DisablePagination}}false{{else}}true{{end}}
 
-	result, err := a.{{$name}}DAL.Query(ctx, params, schema.{{$name}}QueryOptions{
-		QueryOptions: util.QueryOptions{
-			OrderFields: []util.OrderByParam{
-                {{- range .Fields}}{{$fieldName := .Name}}
-				{{- if .Order}}
-				{Field: "{{lowerUnderline $fieldName}}", Direction: {{if eq .Order "DESC"}}util.DESC{{else}}util.ASC{{end}}},
-				{{- end}}
-                {{- end}}
-			},
-		},
-	})
+	var queryOptions schema.{{$name}}QueryOptions
+	queryOptions.QueryOptions.OrderFields = util.SetOrderFields(params.OrderBy, "created_at")
+
+	result, err := a.{{$name}}DAL.Query(ctx, params, queryOptions)
 	if err != nil {
 		return nil, err
 	}
@@ -54,7 +47,7 @@ func (a *{{$name}}) appendChildren(ctx context.Context, data schema.{{plural .Na
 		return data, nil
 	}
 
-	existsInData := func(id string) bool {
+	existsInData := func(id int64) bool {
 		for _, item := range data {
 			if item.ID == id {
 				return true
@@ -100,7 +93,7 @@ func (a *{{$name}}) appendChildren(ctx context.Context, data schema.{{plural .Na
 {{- end}}
 
 // Get the specified {{lowerSpace .Name}} from the data access object.
-func (a *{{$name}}) Get(ctx context.Context, id string) (*schema.{{$name}}, error) {
+func (a *{{$name}}) Get(ctx context.Context, id int64) (*schema.{{$name}}, error) {
 	{{lowerCamel $name}}, err := a.{{$name}}DAL.Get(ctx, id)
 	if err != nil {
 		return nil, err
@@ -113,7 +106,6 @@ func (a *{{$name}}) Get(ctx context.Context, id string) (*schema.{{$name}}, erro
 // Create a new {{lowerSpace .Name}} in the data access object.
 func (a *{{$name}}) Create(ctx context.Context, formItem *schema.{{$name}}Form) (*schema.{{$name}}, error) {
 	{{lowerCamel $name}} := &schema.{{$name}}{
-		{{if $includeID}}ID:          util.NewXID(),{{end}}
 		{{if $includeCreatedAt}}CreatedAt:   time.Now(),{{end}}
 	}
 
@@ -164,7 +156,7 @@ func (a *{{$name}}) Create(ctx context.Context, formItem *schema.{{$name}}Form) 
 }
 
 // Update the specified {{lowerSpace .Name}} in the data access object.
-func (a *{{$name}}) Update(ctx context.Context, id string, formItem *schema.{{$name}}Form) error {
+func (a *{{$name}}) Update(ctx context.Context, id int64, formItem *schema.{{$name}}Form) error {
 	{{lowerCamel $name}}, err := a.{{$name}}DAL.Get(ctx, id)
 	if err != nil {
 		return err
@@ -261,7 +253,7 @@ func (a *{{$name}}) Update(ctx context.Context, id string, formItem *schema.{{$n
 }
 
 // Delete the specified {{lowerSpace .Name}} from the data access object.
-func (a *{{$name}}) Delete(ctx context.Context, id string) error {
+func (a *{{$name}}) Delete(ctx context.Context, id int64) error {
 	{{- if $treeTpl}}
 	{{lowerCamel $name}}, err := a.{{$name}}DAL.Get(ctx, id)
 	if err != nil {

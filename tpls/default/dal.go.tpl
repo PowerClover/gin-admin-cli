@@ -76,7 +76,7 @@ func (a *{{$name}}) Query(ctx context.Context, params schema.{{$name}}QueryParam
 }
 
 // Get the specified {{lowerSpace .Name}} from the database.
-func (a *{{$name}}) Get(ctx context.Context, id string, opts ...schema.{{$name}}QueryOptions) (*schema.{{$name}}, error) {
+func (a *{{$name}}) Get(ctx context.Context, id int64, opts ...schema.{{$name}}QueryOptions) (*schema.{{$name}}, error) {
 	var opt schema.{{$name}}QueryOptions
 	if len(opts) > 0 {
 		opt = opts[0]
@@ -93,7 +93,7 @@ func (a *{{$name}}) Get(ctx context.Context, id string, opts ...schema.{{$name}}
 }
 
 // Exists checks if the specified {{lowerSpace .Name}} exists in the database.
-func (a *{{$name}}) Exists(ctx context.Context, id string) (bool, error) {
+func (a *{{$name}}) Exists(ctx context.Context, id int64) (bool, error) {
 	ok, err := util.Exists(ctx, Get{{$name}}DB(ctx, a.DB).Where("id=?", id))
 	return ok, errors.WithStack(err)
 }
@@ -102,7 +102,7 @@ func (a *{{$name}}) Exists(ctx context.Context, id string) (bool, error) {
 {{- if .Unique}}
 {{- if $treeTpl}}
 // Exist checks if the specified {{lowerSpace .Name}} exists in the database.
-func (a *{{$name}}) Exists{{.Name}}(ctx context.Context, parentID string, {{lowerCamel .Name}} string) (bool, error) {
+func (a *{{$name}}) Exists{{.Name}}(ctx context.Context, parentid int64, {{lowerCamel .Name}} string) (bool, error) {
 	ok, err := util.Exists(ctx, Get{{$name}}DB(ctx, a.DB).Where("parent_id=? AND {{lowerUnderline .Name}}=?", parentID, {{lowerCamel .Name}}))
 	return ok, errors.WithStack(err)
 }
@@ -129,7 +129,7 @@ func (a *{{$name}}) Update(ctx context.Context, item *schema.{{$name}}) error {
 }
 
 // Delete the specified {{lowerSpace .Name}} from the database.
-func (a *{{$name}}) Delete(ctx context.Context, id string) error {
+func (a *{{$name}}) Delete(ctx context.Context, id int64) error {
 	result := Get{{$name}}DB(ctx, a.DB).Where("id=?", id).Delete(new(schema.{{$name}}))
 	return errors.WithStack(result.Error)
 }

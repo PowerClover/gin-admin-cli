@@ -65,7 +65,14 @@ func (a *{{$name}}) Query(c *gin.Context) {
 // @Router /api/v1/{{if .FillRouterPrefix}}{{lower .Module}}/{{end}}{{lowerHyphensPlural .Name}}/{id} [get]
 func (a *{{$name}}) Get(c *gin.Context) {
 	ctx := c.Request.Context()
-	item, err := a.{{$name}}BIZ.Get(ctx, c.Param("id"))
+    idStr := c.Param("id")
+    id, err := strconv.ParseInt(idStr, 10, 64)
+    if err != nil {
+        util.ResError(c, err)
+        return
+    }
+
+	item, err := a.{{$name}}BIZ.Get(ctx, id)
 	if err != nil {
 		util.ResError(c, err)
 		return
@@ -122,7 +129,14 @@ func (a *{{$name}}) Update(c *gin.Context) {
 		return
 	}
 
-	err := a.{{$name}}BIZ.Update(ctx, c.Param("id"), item)
+	idStr := c.Param("id")
+	id, err := strconv.ParseInt(idStr, 10, 64)
+	if err != nil {
+		util.ResError(c, err)
+		return
+	}
+
+	err = a.{{$name}}BIZ.Update(ctx, id, item)
 	if err != nil {
 		util.ResError(c, err)
 		return
@@ -140,7 +154,14 @@ func (a *{{$name}}) Update(c *gin.Context) {
 // @Router /api/v1/{{if .FillRouterPrefix}}{{lower .Module}}/{{end}}{{lowerHyphensPlural .Name}}/{id} [delete]
 func (a *{{$name}}) Delete(c *gin.Context) {
 	ctx := c.Request.Context()
-	err := a.{{$name}}BIZ.Delete(ctx, c.Param("id"))
+    idStr := c.Param("id")
+    id, err := strconv.ParseInt(idStr, 10, 64)
+    if err != nil {
+        util.ResError(c, err)
+        return
+    }
+
+	err = a.{{$name}}BIZ.Delete(ctx, id)
 	if err != nil {
 		util.ResError(c, err)
 		return
